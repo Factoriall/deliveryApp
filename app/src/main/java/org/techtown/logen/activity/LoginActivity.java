@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.techtown.logen.R;
+import org.techtown.logen.SimpleData;
 import org.techtown.logen.data.LoginData;
 import org.techtown.logen.data.LoginResponse;
 import org.techtown.logen.network.RetrofitClient;
@@ -26,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mIdView;
     private EditText mPasswordView;
     private Button mLoginButton;
-    //private ProgressBar mProgressView;
+    private ProgressBar mProgressView;
     private ServiceApi service;
 
     @Override
@@ -35,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mIdView = (EditText) findViewById(R.id.editTextId);
         mPasswordView = (EditText) findViewById(R.id.editTextPwd);
-        mLoginButton = (Button) findViewById(R.id.login_button);
-        //mProgressView = (ProgressBar) findViewById(R.id.login_progress);
+        mLoginButton = (Button) findViewById(R.id.deposit_button);
+        mProgressView = (ProgressBar) findViewById(R.id.login_progress);
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
@@ -89,13 +90,23 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse result = response.body();
-                Toast.makeText(LoginActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
 
-                if(result.getCode() == 200) {
+                if(result.getResponseCode() == 200) {
                     Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+
+                    int userCode = result.getUserCode();
+                    String username = result.getUsername();
+                    int teamCode = result.getTeamCode();
+                    int grade = result.getGrade();
+                    SimpleData data = new SimpleData(userCode, username, teamCode, grade);
+                    intent.putExtra("data", data);
+
                     startActivity(intent);
                 }
-                //showProgress(false);
+                else{
+                    Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+                showProgress(false);
             }
 
             @Override
@@ -110,8 +121,8 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isPasswordValid(String password) {
         return password.length() >= 4;
     }
-    /*
+
     private void showProgress(boolean show) {
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-    }*/
+    }
 }

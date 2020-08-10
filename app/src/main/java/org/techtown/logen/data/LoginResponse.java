@@ -3,24 +3,36 @@ package org.techtown.logen.data;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
-    @SerializedName("code")
-    private int code;
+    @SerializedName("responseCode")
+    private int responseCode;
 
-    @SerializedName("message")
-    private String message;
+    @SerializedName("userCode")
+    private int userCode;
 
-    @SerializedName("userId")
-    private int userId;
+    @SerializedName("teamCode")
+    private int teamCode;
 
-    public int getCode() {
-        return code;
+    @SerializedName("grade")
+    private int grade;
+
+    @SerializedName("username")
+    private String username;
+
+    public int getResponseCode() {
+        return responseCode;
     }
 
-    public String getMessage() {
-        return message;
+    public int getUserCode() {
+        return userCode;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getTeamCode() {
+        return teamCode;
+    }
+
+    public int getGrade() { return grade; }
+
+    public String getUsername() {
+        return username;
     }
 }

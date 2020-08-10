@@ -1,16 +1,18 @@
 package org.techtown.logen.data;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 public class LoginData {
-    @SerializedName("userUID")
-    String userUID;
+    @SerializedName("UID")
+    String UID;
 
-    @SerializedName("userPwd")
-    String userPwd;
+    @SerializedName("pwd")
+    String pwd;
 
-    public LoginData(String userUID, String userPwd) {
-        this.userUID = userUID;
-        this.userPwd = userPwd;
+    public LoginData(String UID, String pwd) {
+        this.UID = UID;
+        this.pwd = pwd;
     }
 }

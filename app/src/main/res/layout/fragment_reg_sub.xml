@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:orientation="horizontal">
+
+
+        <CheckBox
+            android:id="@+id/isLeaderAssigned"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="25dp"
+            android:clickable="false"
+            android:gravity="center"
+            android:background="#9CD3FF"
+            android:text="팀장 확정 여부" />
+
+        <CheckBox
+            android:id="@+id/isDepartmentAssigned"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:layout_marginLeft="25dp"
+            android:gravity="center"
+            android:background="#9CD3FF"
+            android:text="지점 확정 여부" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            android:id="@+id/textViewDelivery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="배송착불"
+            android:background="@drawable/border"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editTextDelivery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:imeOptions="actionGo"
+            android:gravity="right"
+            android:inputType="number"
+            tools:gravity="right" />
+
+        <TextView
+            android:id="@+id/won1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:textSize="16dp"
+            android:text="원" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:background="@drawable/border"
+            android:id="@+id/textViewPrepay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="집하선불"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editTextPrepay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:imeOptions="actionGo"
+            android:gravity="right"
+            android:inputType="number"
+             />
+        <TextView
+            android:id="@+id/won2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:textSize="16dp"
+            android:text="원" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        >
+        <TextView
+            android:background="@drawable/border"
+            android:id="@+id/textViewDeposit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="입금액"
+            android:textSize="30sp" />
+        <TextView
+            android:id="@+id/textViewMoney"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:textSize="24sp"
+            android:text="원"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:background="@drawable/border"
+            android:id="@+id/textViewRemark"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="비고(특이사항)\n무통장입금일,\n전월미수,\n전전일 미수등"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/editTextRemark"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="2"
+            android:ems="10"
+            android:imeOptions="actionGo"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            tools:maxLines="3" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        >
+
+        <Button
+            android:id="@+id/buttonToLeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="팀장으로 전송하기" />
+
+        <Button
+            android:id="@+id/buttonToDepartment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="지점으로 전송하기" />
+    </LinearLayout>
+
+
+
+</LinearLayout>
+</ScrollView>

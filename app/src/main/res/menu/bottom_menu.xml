@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/registerTab"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_create_24"
+        android:title="등록/수정"/>
+    <item
+        android:id="@+id/lookupTab"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="조회"/>
+    <item
+        android:id="@+id/mergeTab"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_merge_type_24"
+        android:title="팀 취합"/>
+</menu>
