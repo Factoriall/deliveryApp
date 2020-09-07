@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,11 @@ public class RegisterFragment extends Fragment {
     EditText editTextDate;
     Button button;
     private ServiceApi service;
+    int isSentBy;
+    int userCode;
+    int years;
+    int months;
+    int days;
 
     Calendar cal;
 
@@ -48,7 +54,8 @@ public class RegisterFragment extends Fragment {
 
         //DepositActivity로부터 유저 정보(유저 코드, 이름, 팀코드, 지위)를 받는다
         DepositActivity activity = (DepositActivity) getActivity();
-        final int userCode = activity.getUserCode();
+        userCode = activity.getUserCode();
+
         final String username = activity.getUsername();
         final int teamCode = activity.getTeamCode();
         final int grade = activity.getGrade();
@@ -56,15 +63,20 @@ public class RegisterFragment extends Fragment {
         Toast.makeText(getContext(), userCode +", "+username+", "+teamCode+","+grade,Toast.LENGTH_LONG).show();
 
         //isSentBy 통해 입금 방법 알려줌
-        final int isSentBy;
-        RadioButton byCash = (RadioButton) view.findViewById(R.id.byCash);
-        RadioButton byBank = (RadioButton) view.findViewById(R.id.byBank);
-        if(byCash.isChecked())
-            isSentBy = 0;
-        else if(byBank.isChecked())
-            isSentBy = 1;
-        else
-            isSentBy = -1;
+        RadioGroup rGroup = (RadioGroup) view.findViewById(R.id.radioGroup);
+        RadioButton checkedRadioButton = (RadioButton)rGroup.findViewById(rGroup.getCheckedRadioButtonId());
+
+        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                if(checkedId == R.id.byCash)
+                    isSentBy = 0;
+                else if(checkedId == R.id.byBank)
+                    isSentBy = 1;
+                else
+                    isSentBy = 2;
+            }
+        });
 
         //datepicker 통해 데이터 받기
         editTextDate = view.findViewById(R.id.editTextDate);
@@ -72,6 +84,10 @@ public class RegisterFragment extends Fragment {
 
         cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);//어제로 설정
+
+        years = cal.get(cal.YEAR);
+        months = cal.get(cal.MONTH) + 1;
+        days = cal.get(cal.DAY_OF_MONTH);
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         editTextDate.setText(df.format(cal.getTime()));
@@ -88,7 +104,8 @@ public class RegisterFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                lookupDepositTable(new DepositSeekRegisterData(userCode, isSentBy, cal.YEAR, cal.MONTH, cal.DAY_OF_MONTH));
+                lookupDepositTable(new DepositSeekRegisterData(userCode, isSentBy, years, months, days));
+                button.setVisibility(View.GONE);
             }
         });
 
@@ -102,10 +119,17 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onResponse(Call<DepositSeekRegisterResponse> call, Response<DepositSeekRegisterResponse> response) {
                 DepositSeekRegisterResponse result = response.body();
+
                 if (!result.getIsExist()) {//등록
                     regFragment = new regFragment();
                     Bundle bundle = new Bundle();
+                    bundle.putInt("pid", userCode);
                     bundle.putBoolean("isNew", true);
+                    bundle.putInt("method", isSentBy);
+                    bundle.putInt("year", years);
+                    bundle.putInt("month", months);
+                    bundle.putInt("day", days);
+
                     regFragment.setArguments(bundle);
                     getChildFragmentManager().beginTransaction().replace(R.id.subcontainer, regFragment).commit();
                 }
@@ -116,7 +140,12 @@ public class RegisterFragment extends Fragment {
                     else {//수정 가능
                         regFragment = new regFragment();
                         Bundle bundle = new Bundle();
+                        bundle.putInt("pid", userCode);
                         bundle.putBoolean("isNew", false);
+                        bundle.putInt("method", isSentBy);
+                        bundle.putInt("year", years);
+                        bundle.putInt("month", months);
+                        bundle.putInt("day", days);
                         bundle.putInt("delivery", result.getDelivery());
                         bundle.putInt("prepay", result.getPrepay());
                         bundle.putString("remark", result.getRemark());
@@ -152,6 +181,10 @@ public class RegisterFragment extends Fragment {
             cal.set(Calendar.YEAR, year);
             cal.set(Calendar.MONTH, month);
             cal.set(Calendar.DAY_OF_MONTH, day);
+
+            years = year;
+            months = month + 1;
+            days = day;
 
             String monthStr = Integer.toString(month);
             String dayStr = Integer.toString(day);
